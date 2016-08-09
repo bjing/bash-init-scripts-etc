@@ -167,6 +167,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <tab> <c-w>
 nnoremap <tab><tab> <c-w><c-w>
+nnoremap <Leader>, <C-w><<CR>
+nnoremap <Leader>. <C-w>><CR>
+nnoremap <Leader>- <C-w>-<CR>
+nnoremap <Leader>= <C-w>+<CR>
 
 map <C-d> :sh<CR>
 vmap <Leader>y "+y
