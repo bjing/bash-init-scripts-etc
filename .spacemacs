@@ -36,36 +36,45 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+
      (auto-completion :variables
-                      auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-help-tooltip t
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-private-snippets-directory nil)
-     better-defaults
-     elm
+     csv
      dash
-     ;; emacs-lisp
+     elm
+     emacs-lisp
+     evil-commentary
      git
+     github
+     (helm :variables helm-enable-auto-resize t)
+     html
+     javascript
      (haskell :variables
               haskell-completion-backend 'intero
               haskell-enable-hindent-style "johan-tibell")
-
-     helm
-     javascript
-     markdown
-     ;; org
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     (osx :variables
+          osx-use-option-as-meta nil)
      purescript
      python
+     ruby
+     ruby-on-rails
      (scala :variables
             scala-use-unicode-arrows t
             scala-auto-insert-asterisk-in-comments t
             scala-enable-eldoc t)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
+     (shell :variables
+            shell-default-position 'bottom
+            shell-default-height 30
+            shell-default-shell 'eshell)
+     spell-checking
      version-control
+     vimscript
+     windows-scripts
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
