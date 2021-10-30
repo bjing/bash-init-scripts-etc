@@ -9,3 +9,6 @@ sh scripts/install_dev_tools.sh
 
 # Other user tools
 sh scripts/install_other_user_tools.sh
+
+# Start GUI
+sudo systemctl start lightdm

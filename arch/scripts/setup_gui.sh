@@ -1,3 +1,7 @@
+# Set up display and window managers
+# https://wiki.archlinux.org/title/KDE
+# https://wiki.archlinux.org/title/xmonad#:~:text=xmonad%20is%20a%20tiling%20window,or%20overlap%2C%20maximizing%20screen%20use.&text=xmonad%20is%20written%2C%20configured%20and,the%20user%20in%20configuration%20files.
+
 # UI
 sudo pacman -Syu --noconfirm xorg-server xorg-xinit lightdm terminus-font alsa-firmware
 # Xmonad
