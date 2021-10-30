@@ -32,3 +32,6 @@ pacstrap /mnt base linux linux-firmware
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
+
+# Chroot into the new installation
+arch-chroot /mnt

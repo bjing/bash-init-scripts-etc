@@ -36,7 +36,9 @@ echo "Creating hostname"
 echo "brians-arch" > /etc/hostname
 
 # Install vim and grub
-pacman -Syu --noconfirm vim grub iwd
+pacman -Syu --noconfirm vim grub iwd sudo
+
+ln -s /usr/bin/vim /usr/bin/vi
 
 echo "Set up network interfaces and tools"
 sh scripts/setup_network.sh
@@ -46,3 +48,13 @@ if [ $MODE = "vbox" ]; then
 else
     sh scripts/setup_grub_uefi.sh
 fi
+
+# Set up root password
+passwd
+
+# Add a new user
+useradd -m brian
+usermod -aG wheel brian
+
+# Setup sudo
+visudo
