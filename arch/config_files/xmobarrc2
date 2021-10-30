@@ -1,0 +1,88 @@
+-- .config/xmobar/xmobarrc
+
+Config {
+
+    -- appearance
+      font                     = "xft:Bitstream Vera Sans Mono:pixelsize=11:antialias=true"
+    , bgColor                  = "black"
+    , fgColor                  = "#70FFFE"
+    , alpha                    = 230
+    , position                 = Top
+--    , position                 = Bottom
+
+    -- layout
+    , sepChar                  = "%"
+    , alignSep                 = "}{"
+    , template                 = " %StdinReader% }{ cpu %multicpu%  mem %memory%  net %dynnetwork% %wifisignal%  vol %volume%  pow %battery%   %date% "
+
+    -- general behavior
+    , lowerOnStart             = True
+    , hideOnStart              = False
+    , allDesktops              = True
+    , overrideRedirect         = True
+    , pickBroadest             = False
+    , persistent               = True
+
+    -- plugins
+    , commands =
+
+        -- network activity monitor
+        [ Run DynNetwork     [ "--template" , "<tx> <rx>kB/s"
+                             , "--Low"      , "100000"
+                             , "--High"     , "500000"
+                             , "--low"      , "#CCFF7D"
+                             , "--normal"   , "#90E897"
+                             , "--high"     , "#B3FFE5"
+                             --, "-w"         , "3"
+                             ] 10
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , "<autototal>%"
+                             , "--Low"      , "30"         -- units: %
+                             , "--High"     , "85"         -- units: %
+                             , "--low"      , "#CCFF7D"
+                             , "--normal"   , "#E8DA4D"
+                             , "--high"     , "#FFBC1E"
+                             --, "-w"         , "2"
+                             ] 10
+
+        -- memory usage monitor
+        , Run Memory         [ "--template" ,"<usedratio>%"
+                             , "--Low"      , "60"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "#CCFF7D"
+                             , "--normal"   , "#E8DA4D"
+                             , "--high"     , "#FFBC1E"
+                             ] 10
+
+        -- battery monitor
+        , Run Battery        [ "--template" , "<acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "#FFBC1E"
+                             , "--normal"   , "#E8DA4D"
+                             , "--high"     , "#CCFF7D"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>%"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#90E897><left>% charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#B3FFE5>full</fc>"
+                             ] 50
+
+        -- time and date indicator
+        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+        , Run Date           "%A, %B %e, %Y %r %Z" "date" 10
+
+        -- standard input
+        , Run StdinReader
+
+        -- wifi signal
+        , Run Com ".bin/wireless.sh" [] "wifisignal" 10
+
+        -- volume
+        , Run Com ".bin/volume.sh" [] "volume" 10
+        ]
+}
