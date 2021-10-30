@@ -20,6 +20,9 @@ if [ $MODE = "uefi" ]; then
     fi
 fi
 
+# Get into our working directory where all the required scripts reside
+cd bash-init-scripts-etc
+
 # Timezone & clock
 echo "Setting up timezone and clock..."
 ln -sf /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
@@ -36,7 +39,7 @@ echo "Creating hostname"
 echo "brians-arch" > /etc/hostname
 
 # Install vim and grub
-pacman -Syu --noconfirm vim grub iwd sudo
+pacman -Syu --noconfirm vim grub iwd sudo git
 
 ln -s /usr/bin/vim /usr/bin/vi
 
@@ -50,11 +53,14 @@ else
 fi
 
 # Set up root password
+echo "Set a passwd for root"
 passwd
 
 # Add a new user
 useradd -m brian
 usermod -aG wheel brian
+echo "Set a password for brian:"
+passwd brian
 
 # Setup sudo
 visudo

@@ -1,5 +1,5 @@
 # Set up network interfaces
-sudo cp arch/20-*network /etc/systemd/network/
+sudo cp config_files/20-*network /etc/systemd/network/
 sudo systemctl enable systemd-networkd
 sudo systemctl enable systemd-resolved
 

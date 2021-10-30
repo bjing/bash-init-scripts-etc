@@ -1,5 +1,9 @@
-# Run scripts/setup_vbox_post_install.sh if it's an install
-# within VirtualBox
+#####################################
+## Please read for VirtualBox install
+#####################################
+## It's recommended to ssh into the vbox machine and
+## edit the pacman mirrorlist before running this script
+########################################
 
 # Set up fonts
 echo "Setting up fonts..."
@@ -21,3 +25,6 @@ sh scripts/install_other_user_tools.sh
 echo "Starting lighdm or reboot the system"
 echo "sudo systemctl start lightdm"
 # sudo systemctl start lightdm
+
+# Uncomment the following for a VirtualBox install
+# sh scripts/setup_vbox_post_install.sh

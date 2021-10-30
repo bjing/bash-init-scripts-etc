@@ -14,8 +14,8 @@ if [ $# != 2 ]; then
     echo "For example: $0 /dev/sda4 /dev/ada5"
     exit -1
 else
-    ROOT_PARTITION=$1
-    SWAP_PARTITION=$2
+    SWAP_PARTITION=$1
+    ROOT_PARTITION=$2
 fi
 
 # Update system clock
@@ -32,6 +32,9 @@ pacstrap /mnt base linux linux-firmware
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
+
+# Copy install scripts to new system
+cp -a ~/bash-init-scripts-etc /mnt/root/
 
 # Chroot into the new installation
 arch-chroot /mnt
