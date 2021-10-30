@@ -3,7 +3,7 @@
 #sudo pacman -U zoom_x86_64.pkg.tar.xz
 
 # Web browsers
-sudo pacman -Sy chromium firefox
+sudo pacman -Syu --noconfirm chromium firefox
 
 # Chat tools
-sudo pacman -Sy community/signal-desktop community/discord community/telegram-desktop
+sudo pacman -Syu --noconfirm community/signal-desktop community/discord community/telegram-desktop
