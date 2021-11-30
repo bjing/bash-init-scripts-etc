@@ -1,5 +1,3 @@
--- .config/xmobar/xmobarrc
-
 Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , additionalFonts = []
        , borderColor = "black"
@@ -15,18 +13,34 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , pickBroadest = False
        , persistent = False
        , hideOnStart = False
-       , iconRoot = "."
+       , iconRoot = "/home/brian/.xmonad/xpm/"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [
-                      -- Run Network "wlp1s0b1" ["-L","0","-H","32", "--normal","green","--high","red"] 10
-		      Run Network "wlp1s0b1" ["--template", "Net: <tx>kB|<rx>kB", "-L","1000","-H","5000", "--low", "gray", "--normal","green","--high","red"] 10
-                    , Run Cpu ["-L","3","-H","50", "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
-		    , Run Date "%a %Y-%m-%d %H:%M:%S" "date" 10
-		    , Run StdinReader
-                    ]
+           -- Run Network "wlan0" ["-L","0","-H","32", "--normal","green","--high","red"] 10
+		       Run Network "wlan0" ["--template", "Net: <tx>kB|<rx>kB", "-L","1000","-H","5000", "--low", "gray", "--normal","green","--high","red"] 10
+         , Run Cpu ["-L","3","-H","50", "--normal","green","--high","red"] 10
+         , Run Memory ["-t","Mem: <usedratio>%"] 10
+         , Run Swap [] 10
+           -- battery monitor
+         , Run Battery  [ "--template" , "Batt: <acstatus>"
+                        , "--Low"      , "10"        -- units: %
+                        , "--High"     , "80"        -- units: %
+                        , "--low"      , "darkred"
+                        , "--normal"   , "darkorange"
+                        , "--high"     , "darkgreen"
+                        , "--" -- battery specific options
+                          -- discharging status
+                          , "-o"	, "<left>% (<timeleft>)"
+                          -- AC "on" status
+                          , "-O"	, "<fc=#dAA520>Charging</fc>"
+                          -- charged status
+                          , "-i"	, "<fc=#006000>Charged</fc>"
+                        ] 50
+		     , Run Date "%a %Y-%m-%d %H:%M:%S" "date" 10
+		     , Run StdinReader
+       ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% | %wlp1s0b1% <fc=#ee9a00>%date%</fc>" }
+       , template = "%StdinReader% }{ %cpu% | %memory% | %wlan0% | %swap% | %battery% | <fc=#ee9a00>%date%</fc>"
+}
