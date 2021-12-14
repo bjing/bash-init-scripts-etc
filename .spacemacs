@@ -41,39 +41,49 @@ values."
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-snippets-in-popup t
-                      auto-completion-private-snippets-directory nil)
-     csv
+                      auto-completion-private-snippets-directory nil
+                      ;; the following are default behaviours, change per your needs
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1)
+     ;; auto-completion
+     ;; csv
      dash
-     elm
+     ;; elm
      emacs-lisp
      evil-commentary
-     git
+     (git :variables
+             git-enable-github-support t)
      github
-     (helm :variables helm-enable-auto-resize t)
-     html
-     javascript
      (haskell :variables
-              haskell-completion-backend 'intero
+              haskell-completion-backend 'lsp
+              haskell-process-type 'stack-ghci
+              haskell-enable-hindent t
               haskell-enable-hindent-style "johan-tibell")
+     ;; (helm :variables helm-enable-auto-resize t)
+     ;; html
+     ;; javascript
      (markdown :variables markdown-live-preview-engine 'vmd)
-     (osx :variables
-          osx-use-option-as-meta nil)
-     purescript
-     python
-     ruby
-     ruby-on-rails
-     (scala :variables
-            scala-use-unicode-arrows t
-            scala-auto-insert-asterisk-in-comments t
-            scala-enable-eldoc t)
-     (shell :variables
-            shell-default-position 'bottom
-            shell-default-height 30
-            shell-default-shell 'eshell)
-     spell-checking
+     neotree
+     (osx :variables osx-use-option-as-meta nil)
+     ;; purescript
+     ;; python
+     ;; ruby
+     ;; ruby-on-rails
+     ;; (scala :variables
+     ;;        scala-use-unicode-arrows t
+     ;;        scala-auto-insert-asterisk-in-comments t
+     ;;        scala-enable-eldoc t)
+     ;; (shell :variables
+     ;;        shell-default-position 'bottom
+     ;;        shell-default-height 30
+     ;;        shell-default-shell 'eshell)
+     ;; spell-checking
+     syntax-checking
      version-control
-     vimscript
-     windows-scripts
+     ;; vimscript
+     ;; windows-scripts
      yaml
      )
    ;; List of additional packages that will be installed without being
@@ -93,6 +103,16 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
+(defun haskell-indentation-advice ()
+  (when (and (< 1 (line-number-at-pos))
+             (save-excursion
+               (forward-line -1)
+               (string= "" (s-trim (buffer-substring (line-beginning-position) (line-end-position))))))
+    (delete-region (line-beginning-position) (point))))
+
+(advice-add 'haskell-indentation-newline-and-indent
+            :after 'haskell-indentation-advice)
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -159,7 +179,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Menlo"
-                               :size 15
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 2)
@@ -352,4 +372,29 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-tooltip-common
+   ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection
+   ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   '(lsp-ui lsp-origami origami helm-lsp helm-dash dash-at-point psci purescript-mode psc-ide company-quickhelp pos-tip web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode noflet ensime sbt-mode scala-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc elm-mode cython-mode company-anaconda anaconda-mode pythonic unfill smeargle orgit mwim mmm-mode markdown-toc markdown-mode magit-gitflow intero flycheck hlint-refactor hindent helm-hoogle helm-gitignore helm-company helm-c-yasnippet haskell-snippets gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct evil-magit magit magit-popup git-commit ghub with-editor diff-hl company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company cmm-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+)
