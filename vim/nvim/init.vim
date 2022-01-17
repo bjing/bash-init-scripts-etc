@@ -18,7 +18,7 @@ set smartindent
 " set autoindent            " indent a new line the same amount as the line just typed
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
-set cc=80                  " set an 80 column border for good coding style
+set cc=120                  " set an 80 column border for good coding style
 set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
 set cursorline              " highlight current cursorline
@@ -30,6 +30,34 @@ set ttyfast                 " Speed up scrolling in Vim
 
 " execute pathogen#infect()
 "
+ 
+"""""""""""""""""""""""""""""""""""""""""
+" Vim Plug
+"""""""""""""""""""""""""""""""""""""""""
+call plug#begin("~/.config/nvim/plugged")
+" Plugin Section
+ Plug 'dracula/vim', {'as': 'dracula'}
+ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+ Plug 'EdenEast/nightfox.nvim'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'SirVer/ultisnips'
+ Plug 'honza/vim-snippets'
+ Plug 'scrooloose/nerdtree'
+ Plug 'PhilRunninger/nerdtree-visual-selection'
+ Plug 'preservim/nerdcommenter' | Plug 'Xuyuanp/nerdtree-git-plugin'
+ Plug 'mhinz/vim-startify'
+ Plug 'neoclide/coc.nvim', {'branch': 'release'}
+ Plug 'neovimhaskell/haskell-vim'
+ Plug 'ctrlpvim/ctrlp.vim'
+ Plug 'tpope/vim-fugitive'
+ Plug 'alx741/vim-stylishask'
+ Plug 'alx741/vim-hindent'
+ Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+ Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline-themes'
+ Plug 'chrisbra/csv.vim'
+call plug#end()
+
 
 """"""""""""""""""""""""""""""""""""""""
 " NERDTree
@@ -62,16 +90,40 @@ let NERDTreeShowHidden=1
 " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " 
-" " GoTo code navigation.
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
+autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 " 
 " " Add (Neo)Vim's native statusline support.
 " " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " " provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+
+"""""""""""""""""""""""""""""""""""""""""
+" CoC Metals
+"""""""""""""""""""""""""""""""""""""""""
+" Help Vim recognize *.sbt and *.sc as Scala files
+au BufRead,BufNewFile *.sbt,*.sc set filetype=scala
+
+" Used to expand decorations in worksheets
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+" Toggle panel with Tree Views
+nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsPackages'
+nnoremap <silent> <space>tp :<C-u>CocCommand metals.tvp metalsPackages<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsPackages'
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
 
 """""""""""""""""""""""""""""""""""""""""
 " Haskell VIM
@@ -84,30 +136,6 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
- 
-"""""""""""""""""""""""""""""""""""""""""
-" Vim Plug
-"""""""""""""""""""""""""""""""""""""""""
-call plug#begin("~/.vim/plugged")
-" Plugin Section
- Plug 'dracula/vim', {'as': 'dracula'}
- Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
- Plug 'EdenEast/nightfox.nvim'
- Plug 'ryanoasis/vim-devicons'
- Plug 'SirVer/ultisnips'
- Plug 'honza/vim-snippets'
- Plug 'scrooloose/nerdtree'
- Plug 'PhilRunninger/nerdtree-visual-selection'
- Plug 'preservim/nerdcommenter' | Plug 'Xuyuanp/nerdtree-git-plugin'
- Plug 'mhinz/vim-startify'
- Plug 'neoclide/coc.nvim', {'branch': 'release'}
- Plug 'neovimhaskell/haskell-vim'
- Plug 'ctrlpvim/ctrlp.vim'
- Plug 'tpope/vim-fugitive'
- Plug 'alx741/vim-stylishask'
- Plug 'alx741/vim-hindent'
-call plug#end()
-
 """""""""""""""""""""""""""""""""""""""""
 " Colour scheme
 """""""""""""""""""""""""""""""""""""""""
@@ -115,3 +143,10 @@ call plug#end()
 "colorscheme tokyonight
 colorscheme nightfox
 
+
+"""""""""""""""""""""""""""""""""""""""""
+" Airline
+"""""""""""""""""""""""""""""""""""""""""
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
