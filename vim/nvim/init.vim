@@ -23,6 +23,8 @@ set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
+"set updatetime=800          " Make it shorter for messages to show faster
+                            " This is set as per mouse hover tooltip popup time
 " set spell                 " enable spell check (may need to download language package)
 " set noswapfile            " disable creating swap file
 " set backupdir=~/.cache/vim " Directory to store backup files.
@@ -30,7 +32,15 @@ set ttyfast                 " Speed up scrolling in Vim
 
 " execute pathogen#infect()
 "
- 
+
+
+"""""""""""""""""""""""""""""""""""""""""
+" Leader!
+"""""""""""""""""""""""""""""""""""""""""
+let mapleader = ","
+let localmapleader = "\<Space>"
+
+
 """""""""""""""""""""""""""""""""""""""""
 " Vim Plug
 """""""""""""""""""""""""""""""""""""""""
@@ -56,6 +66,8 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'vim-airline/vim-airline'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'chrisbra/csv.vim'
+ Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+ Plug 'monkoose/fzf-hoogle.vim'
 call plug#end()
 
 
@@ -90,15 +102,36 @@ let NERDTreeShowHidden=1
 " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " 
-autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
 " GoTo code navigation.
+" The CursorHold hover action is terrible because there's no way to silence errors
+""autocmd CursorHold * silent call CocActionAsync('doHover')
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" 
+nmap <silent> gh :call CocActionAsync('doHover')<cr>
+map <Leader> gn <Plug>(coc-diagnostic-next)
+map <Leader> gp <Plug>(coc-diagnostic-prev)
+map <Leader> rn <Plug>(coc-rename)
+map <Leader> rf <Plug>(coc-refactor)
+map <Leader> qf <Plug>(coc-fix-current)
+
+map <Leader> al <Plug>(coc-codeaction-line)
+map <Leader> ac <Plug>(coc-codeaction-cursor)
+map <Leader> ao <Plug>(coc-codelens-action)
+
+nnoremap <Leader>kd :<C-u>CocList diagnostics<Cr>
+nnoremap <Leader>kc :<C-u>CocList commands<Cr>
+nnoremap <Leader>ko :<C-u>CocList outline<Cr>
+nnoremap <Leader>kr :<C-u>CocListResume<Cr>
+
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+ 
 " " Add (Neo)Vim's native statusline support.
 " " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " " provide custom statusline: lightline.vim, vim-airline.
@@ -125,6 +158,7 @@ nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
 " Reveal current current class (trait or object) in Tree View 'metalsPackages'
 nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPackages<CR>
 
+
 """""""""""""""""""""""""""""""""""""""""
 " Haskell VIM
 """""""""""""""""""""""""""""""""""""""""
@@ -135,6 +169,14 @@ let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+"""""""""""""""""""""""""""""""""""""""""
+" Hoogle
+"""""""""""""""""""""""""""""""""""""""""
+augroup HoogleMaps
+  autocmd!
+  autocmd FileType haskell nnoremap <buffer> <Leader>hh :Hoogle <C-r><C-w><CR>
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""
 " Colour scheme
@@ -150,3 +192,4 @@ colorscheme nightfox
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
+
