@@ -68,6 +68,13 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'chrisbra/csv.vim'
  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
  Plug 'monkoose/fzf-hoogle.vim'
+ "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'junegunn/fzf.vim'
+ Plug 'github/copilot.vim'
+ Plug 'endel/vim-github-colorscheme'
+ Plug 'morhetz/gruvbox'
+ Plug 'ajmwagar/vim-deus'
+
 call plug#end()
 
 
@@ -160,6 +167,12 @@ nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsPacka
 
 
 """""""""""""""""""""""""""""""""""""""""
+" Golang
+"""""""""""""""""""""""""""""""""""""""""
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
+
+"""""""""""""""""""""""""""""""""""""""""
 " Haskell VIM
 """""""""""""""""""""""""""""""""""""""""
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
@@ -184,6 +197,10 @@ augroup END
 "colorscheme dracula
 "colorscheme tokyonight
 colorscheme nightfox
+"colorscheme deus
+"" Light schemes
+"colorscheme github
+"colorscheme gruvbox
 
 
 """""""""""""""""""""""""""""""""""""""""
