@@ -24,6 +24,8 @@
   #TERM: alacritty
 
 window:
+  opacity: 1.0
+
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
@@ -69,12 +71,7 @@ window:
   #   - Windowed
   #   - Maximized
   #   - Fullscreen
-  #
-  # Values for `startup_mode` (macOS only):
-  #   - SimpleFullscreen
-  #startup_mode: Windowed
-
-  # Window title
+ # Window title
   title: Alacritty
 
   # Allow terminal applications to change Alacritty's window title.
@@ -150,7 +147,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 16.0
+  size: 18.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -352,12 +349,6 @@ draw_bold_text_with_bright_colors: true
   #     args: ["Hello, World!"]
   #
   #command: None
-
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.8
 
 selection:
   # This string contains all characters that are used as separators for
@@ -720,14 +711,14 @@ mouse_bindings:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Paste,  mods: Command,                       action: Paste          }
-  - { key: Copy,   mods: Command,                       action: Copy           }
-  #- { key: Paste,  mods: Command,       mode: Vi,       action: Paste          }
-  #- { key: Copy,   mods: Command,       mode: Vi,       action: Copy           }
+  #- { key: Paste,  mods: Command,                       action: Paste          }
+    #- { key: Copy,   mods: Command,                       action: Copy           }
+    #- { key: Paste,  mods: Command,       mode: Vi,       action: Paste          }
+    #- { key: Copy,   mods: Command,       mode: Vi,       action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
   #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
-  #- { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp,  }
-  #- { key: PageDown,  mods: Shift,   mode: ~Alt,        action: ScrollPageDown }
+  - { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp,  }
+  - { key: PageDown,  mods: Shift,   mode: ~Alt,        action: ScrollPageDown }
   #- { key: Home,      mods: Shift,   mode: ~Alt,        action: ScrollToTop,   }
   #- { key: End,       mods: Shift,   mode: ~Alt,        action: ScrollToBottom }
 
@@ -747,8 +738,7 @@ key_bindings:
   - { key: U,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageUp        }
   - { key: D,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageDown      }
   - { key: Y,                           mode: Vi|~Search, action: Copy                    }
-  - { key: Y,                           mode: Vi|~Search, action: ClearSelection          }
-  - { key: Copy,                        mode: Vi|~Search, action: ClearSelection          }
+    #- { key: Y,                           mode: Vi|~Search, action: ClearSelection          }
   - { key: V,                           mode: Vi|~Search, action: ToggleNormalSelection   }
   - { key: V,      mods: Shift,         mode: Vi|~Search, action: ToggleLineSelection     }
   - { key: V,      mods: Control,       mode: Vi|~Search, action: ToggleBlockSelection    }
@@ -812,23 +802,21 @@ key_bindings:
 
   # (macOS only)
   - { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"                 }
-  - { key: K,              mods: Command, mode: ~Vi|~Search, action: ClearHistory          }
   - { key: Key0,           mods: Command,                    action: ResetFontSize         }
   - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
   - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
   - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize      }
   - { key: Minus,          mods: Command,                    action: DecreaseFontSize      }
   - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize      }
-  - { key: V,              mods: Command,                    action: Paste                 }
-  - { key: C,              mods: Command,                    action: Copy                  }
-  - { key: C,              mods: Command, mode: Vi|~Search,  action: ClearSelection        }
+  - { key: V,              mods: Command, mode: Vi|~Search,  action: Paste                 }
+  - { key: C,              mods: Command, mode: Vi|~Search,  action: Copy                  }
   - { key: H,              mods: Command,                    action: Hide                  }
   - { key: H,              mods: Command|Alt,                action: HideOtherApplications }
   - { key: M,              mods: Command,                    action: Minimize              }
   - { key: Q,              mods: Command,                    action: Quit                  }
   - { key: W,              mods: Command,                    action: Quit                  }
   - { key: N,              mods: Command,                    action: SpawnNewInstance      }
-  - { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
+  - { key: Return,         mods: Alt,                        action: ToggleFullscreen      }
   - { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   - { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
   - { key: Left,           mods: Command,                    chars: "\x1bb"                }
