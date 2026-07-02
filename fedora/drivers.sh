@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://www.tecmint.com/install-nvidia-drivers-in-linux/
+
 sudo dnf update
 
 # Enable RPM Fusion repositories
