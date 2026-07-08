@@ -69,8 +69,11 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'chrisbra/csv.vim'
  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
  Plug 'monkoose/fzf-hoogle.vim'
- "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
  Plug 'junegunn/fzf.vim'
+ " Dependency: plenary.nvim
+ "Plug 'nvim-lua/plenary.nvim'
+ "Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
+ "Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
  Plug 'github/copilot.vim'
  Plug 'endel/vim-github-colorscheme'
  Plug 'morhetz/gruvbox'
@@ -115,8 +118,8 @@ endif
 "
 "
 " Formatting selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>fm  <Plug>(coc-format-selected)
+nmap <leader>fm  <Plug>(coc-format-selected)
 
 " Applying code actions to the selected code block
 " Example: `<leader>aap` for current paragraph
@@ -145,6 +148,30 @@ nnoremap <Leader>kd :<C-u>CocList diagnostics<Cr>
 nnoremap <Leader>kc :<C-u>CocList commands<Cr>
 nnoremap <Leader>ko :<C-u>CocList outline<Cr>
 nnoremap <Leader>kr :<C-u>CocListResume<Cr>
+
+
+" Telescope
+" Find files
+nnoremap <leader>ff :Telescope find_files<CR>
+" Live grep (search text in files)
+nnoremap <leader>fg :Telescope live_grep<CR>
+" Open buffers
+nnoremap <leader>fb :Telescope buffers<CR>
+" Help tags
+nnoremap <leader>fh :Telescope help_tags<CR>
+
+" FZF
+" Find Files (uses :FZF)
+nnoremap <leader>fz :FZF<CR>
+" Live Grep / Search Text (uses :Rg, requires 'ripgrep' installed)
+nnoremap <leader>gr :Rg<CR>
+" Open Buffers (uses :Buffers)
+nnoremap <leader>bu :Buffers<CR>
+" Open Recent Files (uses :History)
+nnoremap <leader>hi :History<CR>
+" Git Commits (uses :Commits)
+nnoremap <leader>co :Commits<CR>
+
 
 nnoremap <F5> :buffers<CR>:buffer<Space>
 

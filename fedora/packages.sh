@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # dnf/rpm-ostree
-sudo dnf install vim neovim htop wget curl git tmux
+sudo dnf install vim neovim python3-neovim htop wget curl git tmux
 sudo dnf install gnome-tweaks
 
 
