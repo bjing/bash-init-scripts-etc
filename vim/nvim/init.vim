@@ -71,7 +71,7 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'monkoose/fzf-hoogle.vim'
  Plug 'junegunn/fzf.vim'
  " Dependency: plenary.nvim
- "Plug 'nvim-lua/plenary.nvim'
+ Plug 'nvim-lua/plenary.nvim'
  "Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
  "Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
  Plug 'github/copilot.vim'
@@ -79,6 +79,8 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'morhetz/gruvbox'
  Plug 'ajmwagar/vim-deus'
  Plug 'tpope/vim-surround'
+ Plug 'yukimura1227/vim-yazi'
+
 
 
 call plug#end()
@@ -164,13 +166,17 @@ nnoremap <leader>fh :Telescope help_tags<CR>
 " Find Files (uses :FZF)
 nnoremap <leader>fz :FZF<CR>
 " Live Grep / Search Text (uses :Rg, requires 'ripgrep' installed)
-nnoremap <leader>gr :Rg<CR>
+nnoremap <leader>fg :Rg<CR>
 " Open Buffers (uses :Buffers)
 nnoremap <leader>bu :Buffers<CR>
 " Open Recent Files (uses :History)
 nnoremap <leader>hi :History<CR>
 " Git Commits (uses :Commits)
 nnoremap <leader>co :Commits<CR>
+
+" Set leader key mapping (default is <leader>y)
+let g:yazi_no_mappings = 1
+nnoremap <leader>yz :Yazi<CR>
 
 
 nnoremap <F5> :buffers<CR>:buffer<Space>
