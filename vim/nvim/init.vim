@@ -95,8 +95,8 @@ call plug#end()
 "Toggle NERDTree with Ctrl-N
 " map <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+"nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 
 "Show hidden files in NERDTree
 let NERDTreeShowHidden=1
